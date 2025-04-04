@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes
 from .serializer import *
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.permissions import IsAuthenticated
 
 
 #............................................Registration............................................
@@ -37,3 +38,23 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class MyTokenobtainedPairView(TokenObtainPairView):
     serializer_class=MyTokenObtainPairSerializer
+    
+    
+#............................................ Get User Details............................................
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def GetUserDetails(request): 
+   
+   id = request.GET.get('id')
+   if not id:
+       return Response('Please provide required fields', status=status.HTTP_400_BAD_REQUEST)
+   try:
+       
+       user = CustomUser.objects.get(id=id)
+       
+       serializer = UserSerializer(user)
+       return Response(serializer.data, status=status.HTTP_200_OK)
+   
+   except CustomUser.DoesNotExist:
+       return Response('User not found', status=status.HTTP_404_NOT_FOUND)
