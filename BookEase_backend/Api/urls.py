@@ -7,4 +7,5 @@ urlpatterns = [
     path('login/', MyTokenobtainedPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('get_user_details/', GetUserDetails, name='get_user_details'),
+    path('update_user/', UpdateUser,name='update_user'),
 ]

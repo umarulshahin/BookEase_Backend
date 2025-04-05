@@ -47,6 +47,12 @@ class RegistrationSerializer(serializers.ModelSerializer):
                                               password=validated_data['password'])
         user.save()
         return user
+    def update(self, instance, validated_data):
+        
+        instance.email = validated_data.get('email', instance.email)
+        instance.username = validated_data.get('username', instance.username)
+        instance.save()
+        return instance
     
 class UserSerializer(serializers.ModelSerializer):
     

@@ -58,3 +58,22 @@ def GetUserDetails(request):
    
    except CustomUser.DoesNotExist:
        return Response('User not found', status=status.HTTP_404_NOT_FOUND)
+   
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def UpdateUser(request): 
+    
+    data = request.data
+    if not data['id']: 
+        return Response('Please provide User Id', status=status.HTTP_400_BAD_REQUEST)
+    try:
+        user = CustomUser.objects.get(id=data['id'])
+        serializer = UserSerializer(user,data=data, partial=True)
+        if serializer.is_valid(): 
+            serializer.save()
+            return Response({'success': 'User Updated Successfully','data':serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except CustomUser.DoesNotExist:
+        
+        return Response('User not found', status=status.HTTP_404_NOT_FOUND)
