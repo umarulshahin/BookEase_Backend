@@ -11,6 +11,7 @@ class BookSerializer(serializers.ModelSerializer):
     
     def validate(self, attrs):
         
+        
         base_pattern = r'^(?!\s+$)[A-Za-z][A-Za-z0-9_ ]{2,}$'
         
         if attrs['book_title'] == '' or attrs['author_name'] == '' or attrs['book_description'] == '' or attrs['book_image'] == '' or attrs['genre'] == '' or attrs['created_by'] is None:
@@ -28,3 +29,11 @@ class BookSerializer(serializers.ModelSerializer):
         book = Books.objects.create(**validated_data)
         book.save()
         return book
+    
+    def update(self, instance, validated_data):
+            
+        for fields, value in validated_data.items():
+            setattr(instance, fields, value)
+            
+        instance.save()
+        return instance
