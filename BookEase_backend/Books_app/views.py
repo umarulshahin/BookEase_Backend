@@ -9,7 +9,7 @@ from .serializer import *
 
 class BookManagement(APIView):
   
-    # permission_classes=([IsAuthenticated])
+    permission_classes=([IsAuthenticated])
     
     def post(self,request): 
         
@@ -20,7 +20,7 @@ class BookManagement(APIView):
         serializer = BookSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'success': 'Book Created Successfully'}, status=status.HTTP_201_CREATED)
+            return Response({'success': 'Book Created Successfully','data' : serializer.data}, status=status.HTTP_201_CREATED)
         else :
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -49,17 +49,16 @@ class BookManagement(APIView):
         except Exception as e:
             return Response(str(e), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
-    def patch(self,request):
+    def put(self,request):
         
         data = request.data
-        id = request.data.get('id')
-        print(data,'data')
+        
         if not data or not id:
             return Response('Please provide required fields', status=status.HTTP_400_BAD_REQUEST)
         
         try:
             
-            book = Books.objects.get(id=id)
+            book = Books.objects.get(id=data['id'])
             
             serializer = BookSerializer(book, data=data, partial=True)
             if serializer.is_valid():
