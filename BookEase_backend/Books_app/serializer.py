@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Books
+from .models import *
 import re
 class BookSerializer(serializers.ModelSerializer):
     
@@ -41,3 +41,12 @@ class BookSerializer(serializers.ModelSerializer):
             
         instance.save()
         return instance
+    
+    
+class ReadingListSerializer(serializers.ModelSerializer):
+    
+    book = BookSerializer()
+    
+    class Meta: 
+        model = Reading_List
+        fields = ['user','book','position']

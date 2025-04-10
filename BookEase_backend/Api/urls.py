@@ -11,4 +11,5 @@ urlpatterns = [
     path('update_user/', UpdateUser,name='update_user'),
     
     path('bookmanagement/',BookManagement.as_view(),name='book_management'),
+    path('readinglist_management/',ReadingList_Management.as_view(),name='readinglist_management')
 ]

@@ -32,3 +32,18 @@ class Books(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     genre = models.CharField(max_length=100, choices=GENRE_CHOICES, blank=False)
     created_by = models.ForeignKey(CustomUser,on_delete=models.CASCADE,related_name='created_by', blank=False)
+    
+    class Meta:
+        ordering = ['-created_at']
+        
+class Reading_List(models.Model):
+    
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False)
+    book = models.ForeignKey(Books, on_delete=models.CASCADE, blank=False)
+    position = models.IntegerField(blank=False,default=0)
+    
+    
+    
+    class Meta: 
+        ordering = ['-position']
+        unique_together = ('user','book')
