@@ -10,3 +10,4 @@ PyJWT
 sqlparse                      
 tzdata                      
 gunicorn 
+Pillow
