@@ -108,7 +108,6 @@ class ReadingList_Management(APIView):
     def get(self,request):
         
         id = request. GET.get('id')
-        print(id,'id')
         
         if not id:
             return Response({"error":"User id reqired "},status=status.HTTP_400_BAD_REQUEST)
@@ -117,3 +116,34 @@ class ReadingList_Management(APIView):
         serializer = ReadingListSerializer(books,many=True)
         
         return Response(serializer.data,status=status.HTTP_200_OK)
+    
+    def delete(self,request):
+        
+        user_id = request.data.get('user_id')
+        book_id = request.data.get('book_id')
+        
+        if not user_id or not book_id:
+            return Response('Please provide required fields', status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            
+            Reading_List.objects.filter(user=user_id,book=book_id).delete()
+            return Response('Book Remove successfully',status=status.HTTP_200_OK)
+        
+        except Exception as e:
+            return Response(str(e),status=status.HTTP_400_BAD_REQUEST)
+        
+    def put(self,request):
+        
+        data = request.data
+        
+        if not data: 
+            return Response("Please provide required fields",status=status.HTTP_400_BAD_REQUEST)
+        try:
+            for i in data:
+                
+                Reading_List.objects.filter(user=i['user_id'],book=i['book_id']).update(position=i['position'])
+            
+            return Response('Update successfully',status=status.HTTP_200_OK)
+        except Exception as e: 
+            return Response(str(e),status=status.HTTP_400_BAD_REQUEST)
