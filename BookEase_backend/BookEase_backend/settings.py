@@ -142,7 +142,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CORS_ALLOWED_ORIGINS = [
-   'http://localhost:5173'
+   'http://localhost:5173',
+   'https://bookease-9x57.onrender.com'
 ]
 
 CORS_ALLOW_METHODS = [
