@@ -35,9 +35,9 @@ BookEase is a Django REST API-based application that allows users to manage book
 | `/login/` | POST | Obtain JWT access/refresh token |
 | `/token/refresh/` | POST | Refresh JWT token |
 | `/get_user_details/` | GET | Retrieve current user's profile |
-| `/update_user/` | PUT/PATCH | Update user profile |
-| `/bookmanagement/` | POST/GET/DELETE | Manage books |
-| `/readinglist_management/` | POST/GET/DELETE | Manage reading list |
+| `/update_user/` | PATCH | Update user profile |
+| `/bookmanagement/` | POST/GET/DELETE/PUT | Manage books |
+| `/readinglist_management/` | POST/GET/DELETE/PUT| Manage reading list |
 
 > All endpoints follow RESTful design.
 
@@ -66,7 +66,7 @@ Edit
 
 ### 1. Clone the Repositories
 
-    git clone https://github.com/your-username/bookease-backend.git
+    git clone https://github.com/umarulshahin/BookEase_Backend.git
 2. Backend Setup
 
        python -m venv env
